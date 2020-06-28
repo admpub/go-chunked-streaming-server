@@ -1,3 +1,5 @@
+export GO111MODULE = on
+
 ifeq ($(shell uname),Darwin)
 	BINDIR = binaries/darwin
 else ifeq ($(shell uname),Linux)
@@ -33,3 +35,9 @@ clean:
 	go clean
 	rm -f bin/go-chunked-streaming-server
 	rm -rf content/*
+
+.PHONY: build-example-chunked-streaming
+build-example-chunked-streaming:
+	if [ ! -d bin ]; then mkdir bin; fi
+	go build -o bin/examples-chunked-streaming-post-client examples/chunked-streaming/post_client/main.go
+	go build -o bin/examples-chunked-streaming-input-stream examples/chunked-streaming/input_stream/main.go
